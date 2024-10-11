@@ -1,0 +1,29 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
+using RestSharp;
+
+namespace WebApplication1.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class ZAPIController : ControllerBase
+    {
+
+
+        [HttpGet("Mensagem", Name = "GetMensagem")]
+        public ActionResult<float> SendRequestAsync()
+        {
+            var client = new RestClient("https://api.z-api.io/instances/3D6A2FAACF4EB0B8CAC62272D360C213/token/A42B0A0503720697D41D0D54/send-text");
+            var request = new RestRequest();
+            request.Method = Method.Post;
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("client-token", "F29aab54d64914e7ebc52531528175160S");
+            var payload = new { phone = "28992729073", message = "Karla madero" };
+            request.AddJsonBody(payload);
+            
+            RestResponse response = client.Execute(request);
+            return Ok(1.0);
+        }
+    }
+
+    }
